@@ -1,0 +1,24 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "veterinarian",
+  "url": "https://matthijs.test/fhir/pipeline/StructureDefinition/veterinarian",
+  "name": "Veterinarian",
+  "title": "Veterinarian",
+  "status": "active",
+  "description": "A profile on the Practitioner resource for veterinarians. In the US, vets do not have National Provider Numbers.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Practitioner",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Practitioner",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Practitioner.name",
+        "path": "Practitioner.name",
+        "min": 1
+      }
+    ]
+  }
+}

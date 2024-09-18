@@ -1,0 +1,24 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "fish-patient",
+  "url": "https://matthijs.test/fhir/pipeline/StructureDefinition/fish-patient",
+  "name": "FishPatient",
+  "title": "Fish Patient",
+  "status": "active",
+  "description": "A patient that is a type of fish.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.name",
+        "path": "Patient.name",
+        "min": 1
+      }
+    ]
+  }
+}
