@@ -1,0 +1,47 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "related-condition",
+  "url": "https://matthijs.test/fhir/pipeline/StructureDefinition/related-condition",
+  "name": "RelatedCondition",
+  "title": "Condition related to the current resource",
+  "status": "active",
+  "description": "The resource has an unspecified relationship with a Condition.",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {
+      "type": "element",
+      "expression": "Element"
+    }
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension.extension",
+        "path": "Extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "https://matthijs.test/fhir/pipeline/StructureDefinition/related-condition"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Condition"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
