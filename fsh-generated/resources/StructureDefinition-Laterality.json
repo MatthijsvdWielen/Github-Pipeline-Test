@@ -1,0 +1,47 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "Laterality",
+  "url": "https://matthijs.test/fhir/pipeline/StructureDefinition/Laterality",
+  "name": "Laterality",
+  "status": "active",
+  "description": "Body side of a body location.",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {
+      "type": "element",
+      "expression": "Element"
+    }
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension.extension",
+        "path": "Extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "https://matthijs.test/fhir/pipeline/StructureDefinition/Laterality"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/ValueSet/bodysite-laterality"
+        }
+      }
+    ]
+  }
+}
