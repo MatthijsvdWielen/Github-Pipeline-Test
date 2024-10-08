@@ -1,0 +1,29 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "example-living-patient-profile",
+  "url": "https://matthijs.test/fhir/pipeline/StructureDefinition/example-living-patient-profile",
+  "name": "ExampleLivingPatientProfile",
+  "title": "Example Living Patient Patient Profile",
+  "status": "active",
+  "description": "Example of a profile for living patients inheriting from ExampleAbstractPatientProfile",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "https://matthijs.test/fhir/pipeline/StructureDefinition/example-abstract-patient-profile",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.deceased[x]",
+        "path": "Patient.deceased[x]",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "patternBoolean": false
+      }
+    ]
+  }
+}
