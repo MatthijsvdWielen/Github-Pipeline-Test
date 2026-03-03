@@ -39,7 +39,7 @@ jobs:
           fhir login email="$SIMPLIFIER_USERNAME" password="$SIMPLIFIER_PASSWORD"
 
           # Link the project
-          fhir project link $PROJECT_KEY --strategy TakeRemote
+          fhir project link $PROJECT_KEY --strategy TakeRemote || true
           
           # Sync changes from Simplifier to this runner's local folder
           fhir project sync --strategy TakeRemote
