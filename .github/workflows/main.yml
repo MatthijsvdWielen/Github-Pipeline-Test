@@ -40,7 +40,7 @@ jobs:
           fhir project link $PROJECT_KEY --strategy TakeRemote
           
           # Sync changes from Simplifier to this runner's local folder
-          fhir project sync $PROJECT_KEY --strategy TakeRemote
+          fhir project sync --strategy TakeRemote
 
       - name: Commit and Push Changes
         run: |
