@@ -35,9 +35,12 @@ jobs:
         run: |
           # Log in non-interactively
           fhir login email="$SIMPLIFIER_USERNAME" password="$SIMPLIFIER_PASSWORD"
+
+          # Link the project
+          fhir project link $PROJECT_KEY
           
           # Sync changes from Simplifier to this runner's local folder
-          fhir project sync $PROJECT_KEY --force
+          fhir project sync $PROJECT_KEY --strategy TakeRemote
 
       - name: Commit and Push Changes
         run: |
