@@ -1,8 +1,8 @@
 name: Sync Simplifier to GitHub
 
 on:
-  schedule:
-    - cron: '0 * * * *' # Runs every hour, or change as needed
+  # schedule:
+  #  - cron: '0 * * * *' # Runs every hour, or change as needed
   workflow_dispatch: # Allows manual trigger
 
 jobs:
