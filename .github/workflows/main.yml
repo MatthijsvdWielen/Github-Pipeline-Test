@@ -55,10 +55,12 @@ jobs:
           git reset -- .github/workflows || true
           git checkout -- .github/workflows || true
 
-          # SAFEGUARD: fail if anything changed outside guides/
-          BAD="$(git status --porcelain | awk '{print $2}' | grep -vE '^(guides/|$)' || true)"
+          # SAFEGUARD: allow only guides/ plus these two files
+          ALLOW_REGEX='^(guides/|\.simplifier/project\.snapshot\.json$|fhirpkg\.lock\.json$)'
+
+          BAD="$(git status --porcelain | awk '{print $2}' | grep -Ev "$ALLOW_REGEX" || true)"
           if [[ -n "$BAD" ]]; then
-            echo "Unexpected changes detected outside guides/. Refusing to commit."
+            echo "Unexpected changes detected outside allowlist. Refusing to commit."
             echo "Offending files:"
             echo "$BAD"
             echo ""
@@ -67,13 +69,13 @@ jobs:
             exit 1
           fi
 
-          # Stage only guides/
-          git add -- guides/
+          # Stage only allowlisted paths
+          git add -- guides/ .simplifier/project.snapshot.json fhirpkg.lock.json
 
           if [[ -n "$(git diff --cached --name-only)" ]]; then
-            git commit -m "Automated sync of guide content from Simplifier"
+            git commit -m "Automated sync from Simplifier"
             git pull --rebase origin main
             git push origin main
           else
-            echo "No guide changes detected."
+            echo "No allowlisted changes detected."
           fi
