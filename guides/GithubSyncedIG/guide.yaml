@@ -1,6 +1,6 @@
 title: GithubSyncedIG
 description: 
 version: 
-style-root: styles
-style-name: treetable
+style-root: project
+style-name: TestSubSub
 numbered-headings: false

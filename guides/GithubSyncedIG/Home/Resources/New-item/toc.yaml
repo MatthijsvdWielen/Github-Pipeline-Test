@@ -1,0 +1,6 @@
+- name: Index
+  filename: Index.page.md
+- name: Testpage
+  filename: Testpage.page.md
+- name: SubSub
+  filename: SubSub
