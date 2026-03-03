@@ -46,7 +46,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "Simplifier Sync Bot"
+         git config --global user.name "Simplifier Sync Bot"
           git config --global user.email "bot@matthijs.com"
 
           # Stage everything first
@@ -55,12 +55,14 @@ jobs:
           # IMPORTANT: never commit GitHub Actions workflows from this bot
           git reset -- .github/workflows || true
 
+          # FIX B: discard any workflow changes so the working tree is clean
+          git checkout -- .github/workflows || true
+
           # Only proceed if there are actual changes left staged
-          if [[ -n "$(git status --porcelain)" ]]; then
+          if [[ -n "$(git diff --cached --name-only)" ]]; then
             git commit -m "Automated sync from Simplifier.net"
-            
-            # Use --rebase to ensure we don't overwrite new GitHub commits 
-            # made while the pipeline was running.
+
+            # Rebase onto the latest remote main, then push
             git pull --rebase origin main
             git push origin main
           else
