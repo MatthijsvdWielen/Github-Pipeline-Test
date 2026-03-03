@@ -1,5 +1,7 @@
 - name: Index
   filename: Index.page.md
+- name: Last check2
+  filename: Last-check2.page.md
 - name: Updating this to trigger Pipeline
   filename: Updating-this-to-trigger-Pipeline.page.md
 - name: Another trigger to check
