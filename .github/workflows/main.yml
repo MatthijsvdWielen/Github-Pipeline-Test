@@ -27,13 +27,13 @@ jobs:
         env:
           SIMPLIFIER_USERNAME: ${{ secrets.SIMPLIFIER_USERNAME }}
           SIMPLIFIER_PASSWORD: ${{ secrets.SIMPLIFIER_PASSWORD }}
-          PROJECT_KEY: 'your-project-key'
+          PROJECT_KEY: 'github-pipeline-project'
         run: |
           # Log in non-interactively
           fhir login --username "$SIMPLIFIER_USERNAME" --password "$SIMPLIFIER_PASSWORD"
           
           # Sync changes from Simplifier to this runner's local folder
-          fhir project sync $PROJECT_KEY
+          fhir project sync $PROJECT_KEY --force
 
       - name: Commit and Push Changes
         run: |
