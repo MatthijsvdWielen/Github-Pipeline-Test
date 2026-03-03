@@ -48,10 +48,15 @@ jobs:
         run: |
           git config --global user.name "Simplifier Sync Bot"
           git config --global user.email "bot@matthijs.com"
-          
-          # Only proceed if there are actual changes
+
+          # Stage everything first
+          git add .
+
+          # IMPORTANT: never commit GitHub Actions workflows from this bot
+          git reset -- .github/workflows || true
+
+          # Only proceed if there are actual changes left staged
           if [[ -n "$(git status --porcelain)" ]]; then
-            git add .
             git commit -m "Automated sync from Simplifier.net"
             
             # Use --rebase to ensure we don't overwrite new GitHub commits 
@@ -59,5 +64,5 @@ jobs:
             git pull --rebase origin main
             git push origin main
           else
-            echo "No changes detected on Simplifier."
+            echo "No changes detected on Simplifier (or only workflow files changed)."
           fi
