@@ -37,7 +37,7 @@ jobs:
           fhir login email="$SIMPLIFIER_USERNAME" password="$SIMPLIFIER_PASSWORD"
 
           # Link the project
-          fhir project link $PROJECT_KEY
+          fhir project link $PROJECT_KEY --strategy TakeRemote
           
           # Sync changes from Simplifier to this runner's local folder
           fhir project sync $PROJECT_KEY --strategy TakeRemote
@@ -45,7 +45,7 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git config --global user.name "Simplifier Sync Bot"
-          git config --global user.email "bot@yourdomain.com"
+          git config --global user.email "bot@matthijs.com"
           
           # Only proceed if there are actual changes
           if [[ -n "$(git status --porcelain)" ]]; then
