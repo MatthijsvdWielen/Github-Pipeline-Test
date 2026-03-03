@@ -34,7 +34,7 @@ jobs:
           PROJECT_KEY: 'github-pipeline-project'
         run: |
           # Log in non-interactively
-          fhir login --email "$SIMPLIFIER_USERNAME" --password "$SIMPLIFIER_PASSWORD"
+          fhir login --email= "$SIMPLIFIER_USERNAME" --password= "$SIMPLIFIER_PASSWORD"
           
           # Sync changes from Simplifier to this runner's local folder
           fhir project sync $PROJECT_KEY --force
