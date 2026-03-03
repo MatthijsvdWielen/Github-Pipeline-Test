@@ -51,30 +51,31 @@ jobs:
           git config --global user.name "Simplifier Sync Bot"
           git config --global user.email "bot@matthijs.com"
 
-          # Make sure workflow files are not modified locally (safety)
+          # Never allow workflow files to be modified/committed by this bot
+          git reset -- .github/workflows || true
           git checkout -- .github/workflows || true
 
-          # --- SAFEGUARD 1: Detect unexpected changes outside guides/ ---
-          # List changed files (tracked) after sync
-          CHANGED="$(git status --porcelain)"
+          # Allow anything in guides/, plus these known sync side-effects:
+          ALLOW_REGEX='^(guides/|\.simplifier/|fhirpkg\.lock\.json$)'
 
-          # If anything changed outside guides/, fail (or you can just ignore)
-          if echo "$CHANGED" | awk '{print $2}' | grep -vE '^(guides/|$)' >/dev/null; then
-            echo "Unexpected changes detected outside guides/. Refusing to commit."
-            echo "Changed files:"
+          BAD="$(git status --porcelain | awk '{print $2}' | grep -Ev "$ALLOW_REGEX" || true)"
+          if [[ -n "$BAD" ]]; then
+            echo "Unexpected changes detected outside allowlist. Refusing to commit."
+            echo "Offending files:"
+            echo "$BAD"
+            echo ""
+            echo "Full status:"
             git status --porcelain
             exit 1
           fi
 
-          # --- SAFEGUARD 2: Only stage guides/ ---
-          git add -- guides/
+          # Stage only allowlisted paths
+          git add -- guides/ .simplifier/ fhirpkg.lock.json || true
 
-          # Commit only if there are staged changes
           if [[ -n "$(git diff --cached --name-only)" ]]; then
-            git commit -m "Automated sync of Implementation Guide from Simplifier"
-
+            git commit -m "Automated sync of guide content from Simplifier"
             git pull --rebase origin main
             git push origin main
           else
-            echo "No guide changes detected."
+            echo "No allowlisted changes detected."
           fi
