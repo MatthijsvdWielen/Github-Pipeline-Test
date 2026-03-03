@@ -2,6 +2,8 @@
   filename: Index.page.md
 - name: Updating this to trigger Pipeline
   filename: Updating-this-to-trigger-Pipeline.page.md
+- name: Another trigger to check
+  filename: Another-trigger-to-check.page.md
 - name: Patient
   filename: Patient.page.md
 - name: New item
