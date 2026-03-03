@@ -31,7 +31,7 @@ jobs:
         env:
           SIMPLIFIER_USERNAME: ${{ secrets.SIMPLIFIER_USERNAME }}
           SIMPLIFIER_PASSWORD: ${{ secrets.SIMPLIFIER_PASSWORD }}
-          PROJECT_KEY: 'github-pipeline-project'
+          PROJECT_KEY: 'Github-Pipeline-Project'
         run: |
           # Log in non-interactively
           fhir login email="$SIMPLIFIER_USERNAME" password="$SIMPLIFIER_PASSWORD"
