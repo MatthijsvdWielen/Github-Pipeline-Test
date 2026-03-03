@@ -44,27 +44,37 @@ jobs:
           # Sync changes from Simplifier to this runner's local folder
           fhir project sync --strategy TakeRemote
 
-      - name: Commit and Push Changes
+      - name: Commit and Push IG Changes (guides only)
         run: |
-         git config --global user.name "Simplifier Sync Bot"
+          set -euo pipefail
+
+          git config --global user.name "Simplifier Sync Bot"
           git config --global user.email "bot@matthijs.com"
 
-          # Stage everything first
-          git add .
-
-          # IMPORTANT: never commit GitHub Actions workflows from this bot
-          git reset -- .github/workflows || true
-
-          # FIX B: discard any workflow changes so the working tree is clean
+          # Make sure workflow files are not modified locally (safety)
           git checkout -- .github/workflows || true
 
-          # Only proceed if there are actual changes left staged
-          if [[ -n "$(git diff --cached --name-only)" ]]; then
-            git commit -m "Automated sync from Simplifier.net"
+          # --- SAFEGUARD 1: Detect unexpected changes outside guides/ ---
+          # List changed files (tracked) after sync
+          CHANGED="$(git status --porcelain)"
 
-            # Rebase onto the latest remote main, then push
+          # If anything changed outside guides/, fail (or you can just ignore)
+          if echo "$CHANGED" | awk '{print $2}' | grep -vE '^(guides/|$)' >/dev/null; then
+            echo "Unexpected changes detected outside guides/. Refusing to commit."
+            echo "Changed files:"
+            git status --porcelain
+            exit 1
+          fi
+
+          # --- SAFEGUARD 2: Only stage guides/ ---
+          git add -- guides/
+
+          # Commit only if there are staged changes
+          if [[ -n "$(git diff --cached --name-only)" ]]; then
+            git commit -m "Automated sync of Implementation Guide from Simplifier"
+
             git pull --rebase origin main
             git push origin main
           else
-            echo "No changes detected on Simplifier (or only workflow files changed)."
+            echo "No guide changes detected."
           fi
